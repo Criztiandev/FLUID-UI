@@ -3,7 +3,7 @@ import { cn } from "../../utils/tailwind.utils";
 
 interface Props {
   className?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Badge = (props: Props) => {
