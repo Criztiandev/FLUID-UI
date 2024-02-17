@@ -10,6 +10,7 @@ interface Props {
   rounded?: boolean;
   dir?: "left" | "right";
   icon?: React.ReactNode;
+  onToggle?: () => void;
 }
 
 const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
@@ -29,7 +30,7 @@ const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
 
   const defaultStyle = cn(
     `
-     text-xs text-black font-medium me-2 px-2.5 py-0.5 rounded max-w-[50px] text-center border flex items-center justify-center gap-[5px]
+     text-xs text-black font-medium me-2 px-2.5 py-0.5 rounded w-[50px] text-center border flex items-center justify-center gap-[5px]
     ${flagColor[props.flag || "info"]}
     ${variant[props.as || "normal"]}
     ${props.rounded && "rounded-full"}
@@ -39,7 +40,7 @@ const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
 
   const Component = {
     normal: (
-      <div className={defaultStyle}>
+      <div className={defaultStyle} onClick={props.onToggle}>
         {icon && dir === "left" && icon}
         {props.children}
         {icon && dir === "right" && icon}
@@ -54,10 +55,30 @@ const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
 };
 
 const Chip = (props: Props) => {
+  const defaultStyle = cn(
+    `inline-flex items-center justify-between px-2 py-1 me-2 text-sm font-medium w-[70px] text-blue-800 bg-blue-100 rounded `,
+    props.className
+  );
+
   return (
-    <Badge {...props}>
+    <Badge {...props} className={defaultStyle}>
       {props.children}
-      <span>X</span>
+      <button onClick={props.onToggle} className="cursor-pointer">
+        <svg
+          className="w-2 h-2"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 14">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+          />
+        </svg>
+      </button>
     </Badge>
   );
 };

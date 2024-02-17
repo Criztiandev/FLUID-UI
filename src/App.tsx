@@ -12,6 +12,14 @@ function App() {
       </Badge>
       <Badge>Hi</Badge>
 
+      <Badge
+        type="chip"
+        onToggle={() => {
+          console.log("hi");
+        }}>
+        Nice
+      </Badge>
+
       <Button>
         <Badge type="indicator">10</Badge>
         Notification
