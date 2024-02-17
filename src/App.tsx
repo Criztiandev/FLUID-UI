@@ -1,27 +1,21 @@
+import Badge from "./components/ui/Badge";
 import Button from "./components/ui/Button";
-import IconButton from "./components/ui/IconButton";
 
 function App() {
   return (
     <>
-      <Button dir="left" icon={<div>hi</div>} disabled>
-        Button
-      </Button>
-      <Button dir="left" icon={<div>hi</div>} rounded>
-        Button
-      </Button>
-      <Button as="outline" dir="right" icon={<div>Hi</div>}>
-        Button
-      </Button>
-      <Button as="ghost" dir="top" icon={<div>Hi</div>}>
-        Button
-      </Button>
-      <Button as="link" dir="bottom" icon={<div>Hi</div>}>
-        Button
-      </Button>
+      <Badge dir="left" icon={<div>hi</div>}>
+        Hi
+      </Badge>
+      <Badge dir="right" icon={<div>hi</div>} rounded>
+        Hi
+      </Badge>
+      <Badge as="link">Hi</Badge>
 
-      <IconButton>Hi</IconButton>
-      <IconButton rounded>Hi</IconButton>
+      <Button>
+        <Badge as="child">1</Badge>
+        Notification
+      </Button>
     </>
   );
 }

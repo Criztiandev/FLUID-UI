@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: "normal" | "outline" | "ghost" | "link";
+  as?: "normal" | "outline" | "ghost" | "link" | "child";
   size?: "sm" | "md" | "normal" | "lg" | "xl";
   dir?: "left" | "right" | "top" | "bottom";
   icon?: React.ReactNode;
@@ -16,6 +16,7 @@ const Button = (props: Props) => {
     outline: "border border-gray-400",
     ghost: "",
     link: "bg-transparent hover:underline ",
+    child: "",
   };
 
   const sizeStyle = {
@@ -34,7 +35,7 @@ const Button = (props: Props) => {
   };
 
   const defaultStyle = cn(
-    `text-black text-base font-medium rounded-[8px] px-5 py-2.5 text-center  
+    `relative text-black text-base font-medium rounded-[8px] px-5 py-2.5 text-center  
     ${btnStyles[props.as || "normal"]} 
     ${sizeStyle[props.size || "normal"]}
     ${props.disabled && "cursor-not-allowed opacity-50"}
