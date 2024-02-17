@@ -10,10 +10,10 @@ function App() {
       <Badge dir="right" icon={<div>hi</div>} rounded>
         Hi
       </Badge>
-      <Badge as="link">Hi</Badge>
+      <Badge>Hi</Badge>
 
       <Button>
-        <Badge as="child">1</Badge>
+        <Badge type="indicator">10</Badge>
         Notification
       </Button>
     </>

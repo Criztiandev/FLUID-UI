@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { cn } from "../../utils/tailwind.utils";
 
 interface Props {
-  as?: "normal" | "outline" | "ghost" | "link" | "child";
+  type?: "normal" | "chip" | "indicator";
+  as?: "normal" | "outline" | "ghost";
   flag?: "success" | "danger" | "warning" | "info";
   className?: string;
   children?: React.ReactNode;
@@ -11,15 +12,12 @@ interface Props {
   icon?: React.ReactNode;
 }
 
-const Badge = ({ icon, dir = "left", ...props }: Props) => {
-  const badgeRef = useRef<HTMLDivElement | null>(null);
+const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
   const variant = {
     normal: "",
     outline: "bg-transparent border border-blue-500 text-blue-500",
     ghost: "bg-transparent text-blue-500",
     link: "cursor-pointer underline",
-    child:
-      "absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-3 dark:border-gray-900",
   };
 
   const flagColor = {
@@ -35,21 +33,47 @@ const Badge = ({ icon, dir = "left", ...props }: Props) => {
     ${flagColor[props.flag || "info"]}
     ${variant[props.as || "normal"]}
     ${props.rounded && "rounded-full"}
-   
   `,
     props.className
   );
 
-  useEffect(() => {
-    console.log(badgeRef.current);
-  }, []);
+  const Component = {
+    normal: (
+      <div className={defaultStyle}>
+        {icon && dir === "left" && icon}
+        {props.children}
+        {icon && dir === "right" && icon}
+      </div>
+    ),
+
+    chip: <Chip {...props} />,
+    indicator: <Indicator {...props} />,
+  };
+
+  return <>{Component[type || "normal"]}</>;
+};
+
+const Chip = (props: Props) => {
+  return (
+    <Badge {...props}>
+      {props.children}
+      <span>X</span>
+    </Badge>
+  );
+};
+
+const Indicator = ({ dir = "right", ...props }: Props) => {
+  const defaultStyle = cn(
+    `absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 ${
+      dir === "left" ? "-start-3 " : dir === "right" ? "-end-3 " : ""
+    } dark:border-gray-900`,
+    props.className
+  );
 
   return (
-    <div ref={badgeRef} className={defaultStyle}>
-      {icon && dir === "left" && icon}
+    <Badge className={defaultStyle} {...props}>
       {props.children}
-      {icon && dir === "right" && icon}
-    </div>
+    </Badge>
   );
 };
 
