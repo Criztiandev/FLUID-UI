@@ -20,7 +20,7 @@ const Button = (props: Props) => {
   };
 
   const sizeStyle = {
-    sm: "px-3 py-1.5",
+    sm: "px-2 py-0.5",
     md: "px-4 py-2",
     normal: "px-5 py-2.5",
     lg: "px-6 py-3",
@@ -35,12 +35,12 @@ const Button = (props: Props) => {
   };
 
   const defaultStyle = cn(
-    `relative text-black text-base font-medium rounded-[8px] px-5 py-2.5 text-center  
+    `relative text-black text-base font-medium rounded-[6px] px-5 py-2.5 text-center  
     ${btnStyles[props.as || "normal"]} 
     ${sizeStyle[props.size || "normal"]}
     ${props.disabled && "cursor-not-allowed opacity-50"}
     ${props.rounded ? "rounded-full" : ""}
-    flex gap-2  ${iconDir[props.dir || "left"]}
+    flex gap-2 justify-center ${iconDir[props.dir || "left"]}
     `,
     props.className
   );

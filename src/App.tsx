@@ -1,23 +1,14 @@
-import Accordion from "./components/ui/Accordion";
+import Drawer from "./components/ui/Drawer";
 
 function App() {
   return (
     <>
-      <Accordion>
-        <Accordion.Item title="What is the chismis">
-          <Accordion>
-            <Accordion.Item title="What is the chismis">
-              This is the collest accordion
-            </Accordion.Item>
-            <Accordion.Item title="What is the chismis">
-              This is the collest accordion
-            </Accordion.Item>
-          </Accordion>
-        </Accordion.Item>
-        <Accordion.Item title="What is the chismis">
-          This is the collest accordion
-        </Accordion.Item>
-      </Accordion>
+      <Drawer.Button target="drawer-main">HI</Drawer.Button>
+      {/* <Modal></Modal> */}
+      <Drawer
+        name="drawer-main"
+        dir="down"
+        size={{ width: "400px", height: "300px" }}></Drawer>
     </>
   );
 }
