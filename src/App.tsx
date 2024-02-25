@@ -1,18 +1,14 @@
-import Badge from "./components/ui/Badge";
-import Button from "./components/ui/Button";
-import Chips from "./components/ui/Chips";
+import Drawer from "./components/ui/Drawer";
 
 function App() {
   return (
     <div className="">
-      <Button className="m-4 ">
-        <span>T</span>
-        <Badge as="indicator" className="bg-red-500">
-          20
-        </Badge>
-      </Button>
-
-      <Chips>Close</Chips>
+      <Drawer.Button target="drawer-btn" className="m-4">
+        Drawer
+      </Drawer.Button>
+      <Drawer name="drawer-btn" dir="left" width="400px" height="300px">
+        Test
+      </Drawer>
     </div>
   );
 }

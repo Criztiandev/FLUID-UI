@@ -1,40 +1,48 @@
-import React from "react";
+import React, { forwardRef, HTMLProps } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
-interface Props {
-  className?: string;
-  children?: React.ReactNode;
+interface CardProps extends HTMLProps<HTMLDivElement> {}
+
+interface CardComponent
+  extends React.ForwardRefExoticComponent<
+    CardProps & React.RefAttributes<HTMLDivElement>
+  > {
+  Header: React.FC<CardProps>;
+  Content: React.FC<CardProps>;
+  Section: React.FC<CardProps>;
+  Cover: React.FC<CardProps>;
+  Footer: React.FC<CardProps>;
 }
 
-const Card = (props: Props) => {
-  const defaultStyle = cn(
-    "max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-5",
-    props.className
-  );
+const Card = forwardRef<HTMLDivElement, CardProps>((props, ref) => {
+  const { className, ...rest } = props;
 
-  return <article className={defaultStyle}>{props.children}</article>;
-};
+  const cardClassName = cn("rounded-[5px] shadow border p-4", className);
 
-const Header = (props: Props) => {
-  const defaultStyle = cn("", props.className);
+  return <article ref={ref} className={cardClassName} {...rest}></article>;
+}) as CardComponent;
 
-  return <header className={defaultStyle}>{props.children}</header>;
-};
+Card.Cover = ({ children, className }) => (
+  <figure className={cn("mb-4", className)}>{children}</figure>
+);
 
-const Content = (props: Props) => {
-  const defaultStyle = cn("", props.className);
+Card.Header = ({ children, className }) => (
+  <header className={cn("text-lg font-semibold mb-2", className)}>
+    {children}
+  </header>
+);
 
-  return <main className={defaultStyle}>{props.children}</main>;
-};
+Card.Section = ({ children, className }) => (
+  <section className={cn("text-lg font-semibold mb-2", className)}>
+    {children}
+  </section>
+);
 
-const Cover = (props: Props) => {
-  const defaultStyle = cn("", props.className);
-
-  return <figure className={defaultStyle}>{props.children}</figure>;
-};
-
-Card.Header = Header;
-Card.Content = Content;
-Card.Cover = Cover;
+Card.Content = ({ children, className }) => (
+  <main className={cn("text-sm text-gray-700", className)}>{children}</main>
+);
+Card.Footer = ({ children, className }) => (
+  <footer className={cn("text-sm text-gray-700", className)}>{children}</footer>
+);
 
 export default Card;
