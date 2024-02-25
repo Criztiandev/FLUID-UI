@@ -9,8 +9,8 @@ interface BaseProps {
 interface FieldProps
   extends BaseProps,
     Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
-  as?: "normal" | "outline" | "ghost";
-  size?: "sm" | "md" | "normal" | "lg" | "xl";
+  as?: "default" | "outline" | "ghost";
+  size?: "sm" | "md" | "default" | "lg" | "xl";
   flag?: "success" | "error" | "warning" | "info" | "none";
   label?: string;
   dir?: "left" | "right";
@@ -19,13 +19,47 @@ interface FieldProps
   description?: string;
 }
 
-const Field = ({ type = "text", as, size, ...props }: FieldProps) => {
+// Styles
+const flagStyles = {
+  success:
+    "border-green-400 focus:ring-green-300 dark:focus:ring-green-400 bg-green-50",
+  error: "border-red-400 focus:ring-red-300 dark:focus:ring-red-400 bg-red-50",
+  warning:
+    "border-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-400 bg-yellow-50",
+  info: "border-blue-400 focus:ring-blue-300 dark:focus:ring-blue-400 bg-blue-50",
+  none: "",
+};
+
+const variants = {
+  default: "bg-primary text-white shadow hover:bg-primary/90",
+  outline: "border border-input hover:bg-primary/90",
+  ghost: "bg-transparent hover:bg-accent hover:text-accent",
+};
+
+const sizeVariant = {
+  sm: "px-2 py-0.5",
+  md: "px-4 py-2",
+  default: "px-4 py-2.5",
+  lg: "px-6 py-3",
+  xl: "px-8 py-4",
+};
+
+const statusStyle = {
+  success: "bg-green-50 border border-green-500 text-green-900",
+  error: "bg-red-50 border-red-500 focus:ring-red-300 dark:focus:ring-red-400",
+  warning:
+    "bg-yellow-50 border-yellow-500 focus:ring-yellow-300 dark:focus:ring-yellow-400",
+  info: "bg-blue-50 border-blue-500 focus:ring-blue-300 dark:focus:ring-blue-400",
+  none: "",
+};
+
+const Input = ({ type = "text", as, size, ...props }: FieldProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const defaultStyle = cn(
     `text-gray-900 text-sm rounded-[5px] focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 
-    ${inputStyles[as || "normal"]}
-    ${sizeStyle[size || "normal"]}
+    ${variants[as || "outline"]}
+    ${sizeVariant[size || "default"]}
     ${flagStyles[props.flag || "none"]}
     ${props.status && statusStyle[props.status]}
     ${props.disabled ? "bg-gray-100 dark:bg-gray-800 cursor-not-allowed" : ""} 
@@ -53,7 +87,7 @@ const Field = ({ type = "text", as, size, ...props }: FieldProps) => {
             ref={inputRef}
             type={type}
             className={defaultStyle}
-            placeholder="Placeholder"
+            placeholder={props.placeholder || "Enter your placeholder"}
           />
           {props.icon && props.dir === "right" && props.icon}
         </div>
@@ -65,38 +99,4 @@ const Field = ({ type = "text", as, size, ...props }: FieldProps) => {
   );
 };
 
-export default Field;
-
-// Styles
-const flagStyles = {
-  success:
-    "border-green-400 focus:ring-green-300 dark:focus:ring-green-400 bg-green-50",
-  error: "border-red-400 focus:ring-red-300 dark:focus:ring-red-400 bg-red-50",
-  warning:
-    "border-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-400 bg-yellow-50",
-  info: "border-blue-400 focus:ring-blue-300 dark:focus:ring-blue-400 bg-blue-50",
-  none: "",
-};
-
-const inputStyles = {
-  normal: "bg-gray-50 border border-gray-300",
-  outline: "border border-gray-400",
-  ghost: "",
-};
-
-const sizeStyle = {
-  sm: "px-2 py-0.5",
-  md: "px-4 py-2",
-  normal: "px-4 py-2.5",
-  lg: "px-6 py-3",
-  xl: "px-8 py-4",
-};
-
-const statusStyle = {
-  success: "bg-green-50 border border-green-500 text-green-900",
-  error: "bg-red-50 border-red-500 focus:ring-red-300 dark:focus:ring-red-400",
-  warning:
-    "bg-yellow-50 border-yellow-500 focus:ring-yellow-300 dark:focus:ring-yellow-400",
-  info: "bg-blue-50 border-blue-500 focus:ring-blue-300 dark:focus:ring-blue-400",
-  none: "",
-};
+export default Input;
