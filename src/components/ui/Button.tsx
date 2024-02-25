@@ -2,58 +2,46 @@ import { ButtonHTMLAttributes } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: "normal" | "outline" | "ghost" | "link" | "child";
-  size?: "sm" | "md" | "normal" | "lg" | "xl";
+  as?: "button" | "icon" | "link";
   dir?: "left" | "right" | "top" | "bottom";
+  variant?: "default" | "outline" | "ghost";
+  status?: "success" | "error" | "warning" | "info" | "none";
+  size?: "default" | "sm" | "lg" | "xl";
   icon?: React.ReactNode;
-  rounded?: boolean;
 }
 
+const variation = {
+  button: "h-10 px-5 py-2.5",
+  icon: "h-9 w-9",
+  link: "bg-transparent shadow-none text-black hover:underline hover:underline-offset-4",
+};
+
+const variants = {
+  default: "bg-primary text-white shadow hover:bg-primary/90",
+  outline: "border border-input hover:bg-primary/90",
+  ghost: "bg-transparent hover:bg-accent hover:text-accent",
+};
+
+const sizeStyle = {
+  default: "h-10 px-5 py-2.5",
+  sm: "h-8 px-3 py-2 text-xs",
+  lg: "h-10 px-5 py-3",
+  xl: "h-12 px-6 py-3.5",
+};
+
 const Button = (props: Props) => {
-  const btnStyles = {
-    normal:
-      "bg-gray-400 hover:bg-gray-300 dark:hover:bg-gray-700 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-400 focus:outline-none transition-all duration-200 ease-in-out",
-    outline: "border border-gray-400",
-    ghost: "",
-    link: "bg-transparent hover:underline ",
-    child: "",
-  };
-
-  const sizeStyle = {
-    sm: "px-2 py-0.5",
-    md: "px-4 py-2",
-    normal: "px-5 py-2.5",
-    lg: "px-6 py-3",
-    xl: "px-8 py-4",
-  };
-
-  const iconDir = {
-    left: "flex-row",
-    right: "flex-row-reverse",
-    top: "flex-col items-center",
-    bottom: "flex-col-reverse items-center",
-  };
-
   const defaultStyle = cn(
-    `relative text-black text-base font-medium rounded-[6px] px-5 py-2.5 text-center  
-    ${btnStyles[props.as || "normal"]} 
-    ${sizeStyle[props.size || "normal"]}
-    ${props.disabled && "cursor-not-allowed opacity-50"}
-    ${props.rounded ? "rounded-full" : ""}
-    flex gap-2 justify-center ${iconDir[props.dir || "left"]}
+    `relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 
+    ${variants[props.variant || "default"]}
+    ${sizeStyle[props.size || "default"]}
+    ${variation[props.as || "button"]}
     `,
     props.className
   );
 
   return (
-    <button className={defaultStyle} {...props}>
-      {props.icon &&
-        (props.dir === "left" || props.dir === "top") &&
-        props.icon}
+    <button {...props} className={defaultStyle}>
       {props.children}
-      {props.icon &&
-        (props.dir === "right" || props.dir === "bottom") &&
-        props.icon}
     </button>
   );
 };

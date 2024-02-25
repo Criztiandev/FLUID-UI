@@ -7,18 +7,29 @@ interface Props {
 }
 
 const Group = (props: Props) => {
-  const defaultStyle = cn(
-    "flex justify-evenly items-center text-center rounded-md shadow-sm border",
-    props.className
-  );
+  const defaultStyle = cn("flex items-center ", props.className);
 
   // customize the class name of childs
-  const children = React.Children.toArray(props.children).map((child) => {
-    return React.cloneElement(child as React.ReactElement, {
-      className:
-        "pr-4 text-sm border-s px-4 py-2 w-full text-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-white dark:border-gray-800 inline-flex items-center justify-center gap-2",
-    });
-  });
+  const children = React.Children.toArray(props.children).map(
+    (child, index) => {
+      if (index === 0) {
+        return React.cloneElement(child as React.ReactElement, {
+          className: "bg-gray-400 rounded-r-none rounded-l-lg h-full",
+        });
+      }
+
+      // last child
+      if (index === React.Children.count(props.children) - 1) {
+        return React.cloneElement(child as React.ReactElement, {
+          className: "bg-gray-400 rounded-l-none rounded-r-lg",
+        });
+      }
+
+      return React.cloneElement(child as React.ReactElement, {
+        className: "border-none rounded-none",
+      });
+    }
+  );
 
   return <div className={defaultStyle}>{children}</div>;
 };

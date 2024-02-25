@@ -4,7 +4,7 @@ import { cn } from "../../utils/tailwind.utils";
 interface Props {
   type?: "normal" | "chip" | "indicator";
   as?: "normal" | "outline" | "ghost";
-  flag?: "success" | "danger" | "warning" | "info";
+  flag?: "success" | "error" | "warning" | "info" | "none";
   className?: string;
   children?: React.ReactNode;
   rounded?: boolean;
@@ -22,12 +22,15 @@ const Badge = ({ icon, dir = "left", type = "normal", ...props }: Props) => {
   };
 
   const flagColor = {
-    success: `bg-green-100 border-green-400 hover:bg-green-200`,
-    danger: `bg-red-100 border-red-400 hover:bg-red-200`,
-    warning: `bg-yellow-100 border-yellow-400 hover:bg-yellow-200`,
-    info: `bg-blue-100 border-blue-400 hover:bg-blue-200`,
+    success:
+      "border-green-400 focus:ring-green-300 dark:focus:ring-green-400 bg-green-50",
+    error:
+      "border-red-400 focus:ring-red-300 dark:focus:ring-red-400 bg-red-50",
+    warning:
+      "border-yellow-400 focus:ring-yellow-300 dark:focus:ring-yellow-400 bg-yellow-50",
+    info: "border-blue-400 focus:ring-blue-300 dark:focus:ring-blue-400 bg-blue-50",
+    none: "",
   };
-
   const defaultStyle = cn(
     `
      text-xs text-black font-medium me-2 px-2.5 py-0.5 rounded w-[50px] text-center border flex items-center justify-center gap-[5px]
