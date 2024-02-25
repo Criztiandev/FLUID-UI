@@ -2,18 +2,12 @@ import { HTMLAttributes, forwardRef } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  as?: "default" | "indicator" | "icon";
   variant?: "outline" | "ghost" | "info" | "success" | "warning" | "danger";
   status?: "success" | "error" | "warning" | "info" | "none";
   size?: "default" | "sm" | "lg" | "xl";
+  value?: string | number;
+  onClick?: () => void;
 }
-
-const styleVariant = {
-  default: "cursor-default px-2.5 py-0.5  rounded-[5px] border",
-  indicator:
-    "absolute -top-2 -end-2 justify-center min-w-6 min-h-6 text-white bg-primary rounded-full",
-  icon: "min-w-6 min-h-6 justify-center rounded-full",
-};
 
 const variants = {
   outline: "border border-input hover:bg-primary/90",
@@ -35,12 +29,11 @@ const borderVariants = {
   warning: "border border-yellow-300",
 };
 
-const Badge = forwardRef<HTMLDivElement, Props>(
+const Chips = forwardRef<HTMLDivElement, Props>(
   ({ variant, className, ...props }, ref) => {
     const defaultStyle = cn(
       `
-    inline-flex items-center text-xs font-semibold
-    ${styleVariant[props.as || "default"]}
+    inline-flex items-center text-xs font-semibold cursor-default px-2.5 py-0.5  rounded-[5px] border
     ${variants[variant || "outline"]}
     ${borderVariants[variant || "outline"]}
     `,
@@ -48,11 +41,31 @@ const Badge = forwardRef<HTMLDivElement, Props>(
     );
 
     return (
-      <div {...props} ref={ref} className={defaultStyle}>
-        {props.children}
+      <div ref={ref} className={defaultStyle} {...props}>
+        <span>{props.children}</span>
+        <button
+          className="inline-flex items-center ms-2 text-sm "
+          value={props.value}
+          onClick={props.onClick}>
+          <svg
+            className="w-2 h-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14">
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span className="sr-only">Remove badge</span>
+        </button>
       </div>
     );
   }
 );
 
-export default Badge;
+export default Chips;

@@ -1,12 +1,18 @@
 import Badge from "./components/ui/Badge";
+import Button from "./components/ui/Button";
+import Chips from "./components/ui/Chips";
 
 function App() {
   return (
     <div className="">
-      <Badge>Test</Badge>
-      <Badge variant="success">Test</Badge>
-      <Badge variant="info">Test</Badge>
-      <Badge variant="warning">Test</Badge>
+      <Button className="m-4 ">
+        <span>T</span>
+        <Badge as="indicator" className="bg-red-500">
+          20
+        </Badge>
+      </Button>
+
+      <Chips>Close</Chips>
     </div>
   );
 }
