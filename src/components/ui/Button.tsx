@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -7,7 +7,6 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "default" | "outline" | "ghost";
   status?: "success" | "error" | "warning" | "info" | "none";
   size?: "default" | "sm" | "lg" | "xl";
-  icon?: React.ReactNode;
 }
 
 const variation = {
@@ -22,28 +21,41 @@ const variants = {
   ghost: "bg-transparent hover:bg-accent hover:text-accent",
 };
 
-const sizeStyle = {
+const buttonSize = {
   default: "h-10 px-5 py-2.5",
   sm: "h-8 px-3 py-2 text-xs",
   lg: "h-10 px-5 py-3",
   xl: "h-12 px-6 py-3.5",
 };
 
-const Button = (props: Props) => {
-  const defaultStyle = cn(
-    `relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 
-    ${variants[props.variant || "default"]}
-    ${sizeStyle[props.size || "default"]}
-    ${variation[props.as || "button"]}
-    `,
-    props.className
-  );
-
-  return (
-    <button {...props} className={defaultStyle}>
-      {props.children}
-    </button>
-  );
+const iconSize = {
+  default: "h-9 w-9",
+  sm: "h-8 w-8",
+  lg: "h-10 w-10",
+  xl: "w-12 h-12",
 };
+
+const Button = forwardRef<HTMLButtonElement, Props>(
+  ({ as = "button", variant, size, className, ...props }, ref) => {
+    const defaultStyle = cn(
+      `relative inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 
+    ${variants[variant || "default"]}
+    ${variation[as || "button"]}
+    ${
+      as === "button"
+        ? buttonSize[size || "default"]
+        : iconSize[size || "default"]
+    }
+    `,
+      className
+    );
+
+    return (
+      <button ref={ref} {...props} className={defaultStyle}>
+        {props.children}
+      </button>
+    );
+  }
+);
 
 export default Button;
