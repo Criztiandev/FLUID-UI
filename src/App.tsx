@@ -1,43 +1,16 @@
-import Button from "./components/ui/Button";
-import DisplayBlock from "./containers/DisplayBlock";
+import Alert from "./components/ui/Alert";
 
 function App() {
   return (
     <div className="grid grid-cols-3 gap-4">
-      <DisplayBlock title="Size">
-        <Button size="sm">Small</Button>
-        <Button>Base</Button>
-        <Button size="lg">Large</Button>
-        <Button size="xl">Extra Large</Button>
-        <Button disabled>Disabled</Button>
-      </DisplayBlock>
-
-      <DisplayBlock title="Variants">
-        <Button>Base</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-      </DisplayBlock>
-
-      <DisplayBlock title="Element">
-        <Button>Base</Button>
-        <Button as="icon">T</Button>
-        <Button as="link">Ghost</Button>
-      </DisplayBlock>
-
-      <DisplayBlock title="Button Icon">
-        <Button as="icon" size="sm">
-          T
-        </Button>
-        <Button variant="outline" as="icon">
-          T
-        </Button>
-        <Button variant="ghost" as="icon" size="lg">
-          T
-        </Button>
-        <Button as="icon" size="xl">
-          T
-        </Button>
-      </DisplayBlock>
+      {/* <DisplayBlock title="Size"></DisplayBlock> */}
+      <Alert>HI</Alert>
+      <Alert variant="warning" border>
+        HI
+      </Alert>
+      <Alert variant="success">HI</Alert>
+      <Alert variant="danger">HI</Alert>
+      <Alert variant="info">HI</Alert>
     </div>
   );
 }
