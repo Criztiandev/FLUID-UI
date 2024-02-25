@@ -10,7 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variation = {
-  button: "h-10 px-5 py-2.5",
+  button: "h-9 px-5 py-2.5",
   icon: "h-9 w-9",
   link: "bg-transparent shadow-none text-black hover:underline hover:underline-offset-4",
 };

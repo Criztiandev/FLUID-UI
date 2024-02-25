@@ -7,13 +7,10 @@ import React, {
 } from "react";
 import { cn } from "../../utils/tailwind.utils";
 
-interface Props {
+interface ModalProps {
+  name: string;
   className?: string;
   children?: React.ReactNode;
-}
-
-interface ModalProps extends Props {
-  name: string;
 }
 
 interface ButtonProps extends LabelHTMLAttributes<HTMLLabelElement> {
